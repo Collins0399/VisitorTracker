@@ -1,8 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using VisitorTracker.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Read the connection string from appsettings.json
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Register the ApplicationDbContext with the dependency injection container, configuring it to use SQL Server with the specified connection string
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
