@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using VisitorTracker.Data;
+using VisitorTracker.Interfaces;
+using VisitorTracker.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Register the VisitorService with the dependency injection container, associating it with the IVisitorService interface
+builder.Services.AddScoped<IVisitorService, VisitorService>();
 
 // Read the connection string from appsettings.json
 var connectionString =
