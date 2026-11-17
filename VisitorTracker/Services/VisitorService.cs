@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
 using VisitorTracker.Data;
 using VisitorTracker.DTOs;
 using VisitorTracker.Interfaces;
@@ -8,9 +8,9 @@ namespace VisitorTracker.Services;
 
 public class VisitorService : IVisitorService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;    
 
-    public VisitorService(ApplicationDbContext context)
+    public VisitorService(ApplicationDbContext context) 
     {
         _context = context;
     }
@@ -30,4 +30,23 @@ public class VisitorService : IVisitorService
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<VisitorResponse>> GetAllVisitorsAsync()
+    {
+        var visitors = await _context.Visitors
+            .Select(visitor => new VisitorResponse
+            {
+                Id = visitor.Id,
+                FirstName = visitor.FirstName,
+                LastName = visitor.LastName,
+                PhoneNumber = visitor.PhoneNumber,
+                Email = visitor.Email,
+                Organization = visitor.Organization,
+                CreatedAtUtc = visitor.CreatedAtUtc
+            })
+            .ToListAsync();
+
+        return visitors;
+    }
+
 }

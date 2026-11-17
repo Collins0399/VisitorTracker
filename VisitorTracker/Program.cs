@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Register the VisitorService with the dependency injection container, associating it with the IVisitorService interface
+// Register the VisitorService with the dependency injection container, associating it with the IVisitorService interface 
 builder.Services.AddScoped<IVisitorService, VisitorService>();
 
 // Read the connection string from appsettings.json

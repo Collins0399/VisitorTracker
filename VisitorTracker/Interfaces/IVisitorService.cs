@@ -5,5 +5,6 @@ namespace VisitorTracker.Interfaces
     public interface IVisitorService
     {
         Task RegisterVisitorAsync(RegisterVisitorRequest request);
+        Task<IEnumerable<VisitorResponse>> GetAllVisitorsAsync();
     }
 }

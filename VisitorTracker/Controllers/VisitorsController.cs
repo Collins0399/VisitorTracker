@@ -23,7 +23,15 @@ public class VisitorsController : ControllerBase
 
         return Ok(new
         {
-            message = "Visitor registered successfully."
+            message = "Visitor registered successfully." 
         });
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<VisitorResponse>>> GetAllVisitors()
+    {
+        var visitors = await _visitorService.GetAllVisitorsAsync();
+
+        return Ok(visitors);
     }
 }

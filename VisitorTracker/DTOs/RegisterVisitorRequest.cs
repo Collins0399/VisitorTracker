@@ -13,7 +13,7 @@ namespace VisitorTracker.DTOs
         [StringLength(50, MinimumLength = 2)]
         public required string LastName { get; set; }
 
-        [Phone(ErrorMessage = "Please provide a valid phone number.")]
+        [Phone(ErrorMessage = "Please provide a valid phone number.")]  
         public string? PhoneNumber { get; set; }
 
         [EmailAddress(ErrorMessage = "Please provide a valid email address.")]
