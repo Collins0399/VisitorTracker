@@ -34,4 +34,72 @@ public class VisitorsController : ControllerBase
 
         return Ok(visitors);
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<VisitorResponse>> GetVisitorById(int id)
+    {
+        var visitor = await _visitorService.GetVisitorByIdAsync(id);
+
+        if (visitor is null)
+        {
+            return NotFound(new
+            {
+                message = $"Visitor with ID {id} was not found."
+            });
+        }
+
+        return Ok(visitor);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateVisitor(
+        int id,
+        [FromBody] UpdateVisitorRequest request)
+    {
+        var updated = await _visitorService.UpdateVisitorAsync(id, request);
+
+        if (!updated)
+        {
+            return NotFound(new
+            {
+                message = $"Visitor with ID {id} was not found."
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Visitor updated successfully."
+        });
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteVisitor(int id)
+    {
+        try
+        {
+            var deleted = await _visitorService.DeleteVisitorAsync(id);
+
+            if (!deleted)
+            {
+                return NotFound(new
+                {
+                    message = $"Visitor with ID {id} was not found."
+                });
+            }
+
+            return Ok(new
+            {
+                message = "Visitor deleted successfully."
+            });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new
+            {
+                message = ex.Message
+            });
+        }
+    }
+
+
 }

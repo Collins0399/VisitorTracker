@@ -6,5 +6,8 @@ namespace VisitorTracker.Interfaces
     {
         Task RegisterVisitorAsync(RegisterVisitorRequest request);
         Task<IEnumerable<VisitorResponse>> GetAllVisitorsAsync();
+        Task<VisitorResponse?> GetVisitorByIdAsync(int id);
+        Task<bool> UpdateVisitorAsync(int id, UpdateVisitorRequest request);
+        Task<bool> DeleteVisitorAsync(int id);
     }
 }
